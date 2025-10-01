@@ -1,9 +1,7 @@
 // Configuração global do PocketBase
-import Constants from "expo-constants";
+import { POCKETBASE_URL } from "./local.config";
 import PocketBase from "pocketbase";
 
-const POCKETBASE_URL =
-  Constants.expoConfig?.extra?.POCKETBASE_URL || "http://127.0.0.1:8090";
 export const pb = new PocketBase(POCKETBASE_URL);
 
 // Função de autenticação

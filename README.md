@@ -22,12 +22,17 @@ App.js             # Entry point (importa src/App.js)
 Para definir o endereço do backend (PocketBase), use o arquivo `app.config.js`:
 
 ```js
+import { POCKETBASE_URL } from "./src/config/local.config";
+
 export default {
-   expo: {
-      extra: {
-         POCKETBASE_URL: "http://192.168.100.72:8090"
-      }
-   }
+  expo: {
+    name: "PokeDex App",
+    slug: "poke-dex-app",
+    version: "1.0.0",
+    extra: {
+      POCKETBASE_URL: POCKETBASE_URL,
+    },
+  },
 };
 ```
 
@@ -40,6 +45,34 @@ const POCKETBASE_URL = Constants.expoConfig.extra.POCKETBASE_URL;
 
 Se aparecer erro ao importar do `@env`, troque para esse método.
 
+---
+
+## Como instalar e rodar o PocketBase
+
+O backend do projeto utiliza o [PocketBase](https://pocketbase.io/), um banco de dados local leve e fácil de usar.
+
+1. Acesse https://pocketbase.io/ e baixe o executável para seu sistema operacional.
+2. Extraia o arquivo baixado.
+3. Para rodar o servidor, execute no terminal:
+   - **Windows:**
+     ```sh
+     .\pocketbase.exe serve
+     ```
+   - **Linux/Mac:**
+     ```sh
+     ./pocketbase serve
+     ```
+   - **Rede local (acessar de outros dispositivos):**
+     ```sh
+     ./pocketbase serve --http=0.0.0.0:8090
+     ```
+4. O painel web estará disponível em `http://localhost:8090/_/` ou `http://<ip-da-sua-maquina>:8090/_/`.
+5. Configure o endereço do backend no arquivo `src/config/local.config.js` conforme instruções acima.
+
+---
+
+## Instalação do Projeto
+
 1. Instale as dependências:
    ```sh
    npm install
@@ -49,7 +82,6 @@ Se aparecer erro ao importar do `@env`, troque para esse método.
    ```sh
    npm start
    ```
-
 
 ## Paleta de Cores
 
