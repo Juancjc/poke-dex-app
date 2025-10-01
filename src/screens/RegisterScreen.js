@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { register } from "../config/pocketbase";
 import { View, StyleSheet } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
@@ -42,7 +43,27 @@ export default function RegisterScreen({ navigation }) {
         style={styles.input}
         secureTextEntry
       />
-      <Button mode="contained" onPress={() => {}} style={styles.button}>
+      <Button
+        mode="contained"
+        onPress={async () => {
+          try {
+            await register({
+              email,
+              password,
+              passwordConfirm: password,
+              name,
+              nickname,
+            });
+            alert("Cadastro realizado com sucesso!");
+            navigation.goBack();
+          } catch (err) {
+            alert(
+              "Erro ao cadastrar: " + (err?.message || "Verifique os dados")
+            );
+          }
+        }}
+        style={styles.button}
+      >
         Cadastrar
       </Button>
       <Button onPress={() => navigation.goBack()}>Já tem conta? Entrar</Button>

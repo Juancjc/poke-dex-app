@@ -16,7 +16,29 @@ src/
 App.js             # Entry point (importa src/App.js)
 ```
 
-## Instalação
+
+## Variáveis de ambiente no Expo
+
+Para definir o endereço do backend (PocketBase), use o arquivo `app.config.js`:
+
+```js
+export default {
+   expo: {
+      extra: {
+         POCKETBASE_URL: "http://192.168.100.72:8090"
+      }
+   }
+};
+```
+
+No código, acesse assim:
+
+```js
+import Constants from "expo-constants";
+const POCKETBASE_URL = Constants.expoConfig.extra.POCKETBASE_URL;
+```
+
+Se aparecer erro ao importar do `@env`, troque para esse método.
 
 1. Instale as dependências:
    ```sh

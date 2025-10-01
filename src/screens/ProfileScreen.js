@@ -1,9 +1,8 @@
 import React, { useState, useContext } from "react";
 import { View, StyleSheet } from "react-native";
-
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, Text, useTheme, Appbar } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
-import { ThemeModeContext } from "../App";
+import { ThemeModeContext, AuthContext } from "../App";
 
 export default function ProfileScreen() {
   const [nickname, setNickname] = useState("");
@@ -12,47 +11,55 @@ export default function ProfileScreen() {
   const [password, setPassword] = useState("");
   const theme = useTheme();
   const { toggleTheme, mode } = useContext(ThemeModeContext);
+  const { logout } = useContext(AuthContext);
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
-    >
-      <Text style={[styles.title, { color: theme.colors.onBackground }]}>
-        Perfil
-      </Text>
-      <AppTextInput
-        label="Nickname"
-        value={nickname}
-        onChangeText={setNickname}
-        style={styles.input}
-      />
-      <AppTextInput
-        label="Nome"
-        value={name}
-        onChangeText={setName}
-        style={styles.input}
-      />
-      <AppTextInput
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-      <AppTextInput
-        label="Senha"
-        value={password}
-        onChangeText={setPassword}
-        style={styles.input}
-        secureTextEntry
-      />
-      <Button mode="contained" onPress={() => {}} style={styles.button}>
-        Salvar
-      </Button>
-      <Button mode="outlined" onPress={toggleTheme} style={styles.button}>
-        Alternar para modo {mode === "light" ? "escuro" : "claro"}
-      </Button>
+    <View style={{ flex: 1 }}>
+      <Appbar.Header>
+        <Appbar.Content title="Perfil" />
+        <Appbar.Action
+          icon="logout"
+          onPress={logout}
+          accessibilityLabel="Sair"
+        />
+      </Appbar.Header>
+      <View
+        style={[styles.container, { backgroundColor: theme.colors.background }]}
+      >
+        <AppTextInput
+          label="Nickname"
+          value={nickname}
+          onChangeText={setNickname}
+          style={styles.input}
+        />
+        <AppTextInput
+          label="Nome"
+          value={name}
+          onChangeText={setName}
+          style={styles.input}
+        />
+        <AppTextInput
+          label="Email"
+          value={email}
+          onChangeText={setEmail}
+          style={styles.input}
+          autoCapitalize="none"
+          keyboardType="email-address"
+        />
+        <AppTextInput
+          label="Senha"
+          value={password}
+          onChangeText={setPassword}
+          style={styles.input}
+          secureTextEntry
+        />
+        <Button mode="contained" onPress={() => {}} style={styles.button}>
+          Salvar
+        </Button>
+        <Button mode="outlined" onPress={toggleTheme} style={styles.button}>
+          Alternar para modo {mode === "light" ? "escuro" : "claro"}
+        </Button>
+      </View>
     </View>
   );
 }

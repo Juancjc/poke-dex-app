@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { login } from "../config/pocketbase";
 import { View, StyleSheet } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
@@ -28,7 +29,19 @@ export default function LoginScreen({ navigation }) {
         style={styles.input}
         secureTextEntry
       />
-      <Button mode="contained" onPress={() => {}} style={styles.button}>
+      <Button
+        mode="contained"
+        onPress={async () => {
+          try {
+            await login(email, password);
+            // Aqui você pode navegar para a tela principal ou mostrar sucesso
+            // navigation.navigate('Home');
+          } catch (err) {
+            alert("Erro ao logar: " + (err?.message || "Verifique seus dados"));
+          }
+        }}
+        style={styles.button}
+      >
         Entrar
       </Button>
       <Button onPress={() => navigation.navigate("Register")}>
