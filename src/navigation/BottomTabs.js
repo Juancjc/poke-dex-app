@@ -40,6 +40,10 @@ const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
   const theme = useTheme();
+  const ReactCtx = require("react");
+  const { useContext } = ReactCtx;
+  const { toggleTheme, mode } = useContext(require("../App").ThemeModeContext);
+  const { logout } = useContext(require("../App").AuthContext);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -51,6 +55,32 @@ export default function BottomTabs() {
         },
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.onSurface,
+        tabBarStyle: {
+          backgroundColor: theme.colors.background,
+          borderTopColor: theme.colors.border,
+        },
+        headerStyle: {
+          backgroundColor: theme.colors.background,
+        },
+        headerTintColor: theme.colors.primary,
+        headerRight: () => (
+          <ReactCtx.Fragment>
+            <TabIcon
+              name={mode === "dark" ? "white-balance-sunny" : "weather-night"}
+              color={theme.colors.primary}
+              size={24}
+              onPress={toggleTheme}
+              style={{ marginRight: 16 }}
+            />
+            <TabIcon
+              name="logout"
+              color={theme.colors.error}
+              size={24}
+              onPress={logout}
+              style={{ marginRight: 8 }}
+            />
+          </ReactCtx.Fragment>
+        ),
       })}
     >
       {TABS.map((tab) => (

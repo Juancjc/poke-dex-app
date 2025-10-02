@@ -51,6 +51,10 @@ export default function App() {
       if (auth && auth.token) {
         pb.authStore.save(auth.token, auth.model, auth.verified);
         setAuthenticated(pb.authStore.isValid);
+        // Carrega preferência de tema do usuário
+        if (auth.model && typeof auth.model.tema_escuro === "boolean") {
+          setMode(auth.model.tema_escuro ? "dark" : "light");
+        }
       }
     })();
     // Listener para salvar no SecureStore ao logar
@@ -62,6 +66,13 @@ export default function App() {
           verified: pb.authStore.verified,
         });
         setAuthenticated(true);
+        // Atualiza tema se mudar no login
+        if (
+          pb.authStore.model &&
+          typeof pb.authStore.model.tema_escuro === "boolean"
+        ) {
+          setMode(pb.authStore.model.tema_escuro ? "dark" : "light");
+        }
       } else {
         clearAuth();
         setAuthenticated(false);
@@ -69,8 +80,22 @@ export default function App() {
     });
   }, []);
 
-  const toggleTheme = () =>
-    setMode((prev) => (prev === "light" ? "dark" : "light"));
+  const toggleTheme = async () => {
+    const newMode = mode === "light" ? "dark" : "light";
+    setMode(newMode);
+    // Atualiza no banco do usuário logado
+    try {
+      if (pb.authStore.model && pb.authStore.model.id) {
+        await pb.collection("users").update(pb.authStore.model.id, {
+          tema_escuro: newMode === "dark",
+        });
+        // Atualiza o modelo local
+        pb.authStore.model.tema_escuro = newMode === "dark";
+      }
+    } catch (e) {
+      // erro silencioso
+    }
+  };
 
   const logout = () => {
     pb.authStore.clear();

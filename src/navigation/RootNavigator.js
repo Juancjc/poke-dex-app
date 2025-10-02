@@ -6,8 +6,11 @@ import { AuthContext } from "../App";
 
 export default function RootNavigator() {
   const { isAuthenticated } = useContext(AuthContext);
+  // Importa o tema do Paper via useTheme
+  const { useTheme } = require("react-native-paper");
+  const theme = useTheme();
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={theme}>
       {isAuthenticated ? <BottomTabs /> : <AuthStack />}
     </NavigationContainer>
   );

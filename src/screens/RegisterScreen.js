@@ -3,6 +3,7 @@ import { register } from "../config/pocketbase";
 import { View, StyleSheet } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
+import LogoHeader from "../components/LogoHeader";
 
 export default function RegisterScreen({ navigation }) {
   const [nickname, setNickname] = useState("");
@@ -15,6 +16,7 @@ export default function RegisterScreen({ navigation }) {
     <View
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
+      <LogoHeader />
       <Text style={styles.title}>Cadastro</Text>
       <AppTextInput
         label="Nickname"

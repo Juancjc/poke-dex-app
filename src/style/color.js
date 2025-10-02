@@ -1,6 +1,6 @@
 // Paleta de cores para o app
 export const lightColors = {
-  primary: "#1976D2",
+  primary: "#f54c4cff",
   secondary: "#FFB300",
   background: "#F5F5F5",
   surface: "#FFFFFF",
@@ -18,10 +18,11 @@ export const lightColors = {
   pokeYellow: "#FFCC00",
   pokeBlue: "#3B4CCA",
   pokeGreen: "#48D0B0",
+  inputBackground: "#eef3f7ff", // azul clarinho para input
 };
 
 export const darkColors = {
-  primary: "#90CAF9",
+  primary: "#f54c4cff",
   secondary: "#FFD54F",
   background: "#181A20",
   surface: "#23262F",
@@ -39,6 +40,7 @@ export const darkColors = {
   pokeYellow: "#FFCC00",
   pokeBlue: "#3B4CCA",
   pokeGreen: "#48D0B0",
+  inputBackground: "#181A20", // cor escura para input no tema dark
 };
 
 export default lightColors;

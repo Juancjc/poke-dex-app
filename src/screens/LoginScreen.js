@@ -3,6 +3,7 @@ import { login } from "../config/pocketbase";
 import { View, StyleSheet } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
+import LogoHeader from "../components/LogoHeader";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function LoginScreen({ navigation }) {
     <View
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
+      <LogoHeader />
       <Text style={styles.title}>Login</Text>
       <AppTextInput
         label="Email"
