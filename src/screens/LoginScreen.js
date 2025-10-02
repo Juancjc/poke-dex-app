@@ -36,17 +36,20 @@ export default function LoginScreen({ navigation }) {
         onPress={async () => {
           try {
             await login(email, password);
-            // Aqui você pode navegar para a tela principal ou mostrar sucesso
-            // navigation.navigate('Home');
           } catch (err) {
             alert("Erro ao logar: " + (err?.message || "Verifique seus dados"));
           }
         }}
-        style={styles.button}
+        style={[styles.button, { backgroundColor: theme.colors.primary }]}
+        labelStyle={theme.colors.buttonTextColor}
       >
         Entrar
       </Button>
-      <Button onPress={() => navigation.navigate("Register")}>
+      <Button
+        mode="text"
+        onPress={() => navigation.navigate("Register")}
+        labelStyle={theme.colors.buttonTextColor}
+      >
         Não tem conta? Cadastre-se
       </Button>
     </View>

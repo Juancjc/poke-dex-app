@@ -7,9 +7,10 @@ import LogoHeader from "../components/LogoHeader";
 
 export default function RegisterScreen({ navigation }) {
   const [nickname, setNickname] = useState("");
-  const [name, setName] = useState("");
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const theme = useTheme();
 
   return (
@@ -26,8 +27,8 @@ export default function RegisterScreen({ navigation }) {
       />
       <AppTextInput
         label="Nome"
-        value={name}
-        onChangeText={setName}
+        value={nome}
+        onChangeText={setNome}
         style={styles.input}
       />
       <AppTextInput
@@ -45,15 +46,25 @@ export default function RegisterScreen({ navigation }) {
         style={styles.input}
         secureTextEntry
       />
+      <AppTextInput
+        label="Confirmar senha"
+        value={passwordConfirm}
+        onChangeText={setPasswordConfirm}
+        style={styles.input}
+        secureTextEntry
+      />
       <Button
         mode="contained"
         onPress={async () => {
           try {
+            if (password !== passwordConfirm) {
+              throw new Error("Senha e confirmação não conferem");
+            }
             await register({
               email,
               password,
-              passwordConfirm: password,
-              name,
+              passwordConfirm,
+              nome,
               nickname,
             });
             alert("Cadastro realizado com sucesso!");
@@ -64,11 +75,18 @@ export default function RegisterScreen({ navigation }) {
             );
           }
         }}
-        style={styles.button}
+        style={[styles.button, { backgroundColor: theme.colors.primary }]}
+        labelStyle={theme.colors.buttonTextColor}
       >
         Cadastrar
       </Button>
-      <Button onPress={() => navigation.goBack()}>Já tem conta? Entrar</Button>
+      <Button
+        mode="text"
+        onPress={() => navigation.goBack()}
+        labelStyle={{ color: theme.colors.primary }}
+      >
+        Já tem conta? Entrar
+      </Button>
     </View>
   );
 }
