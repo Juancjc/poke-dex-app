@@ -3,12 +3,16 @@ import { View, StyleSheet } from "react-native";
 import { Button, Text, useTheme, Appbar } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
 import { ThemeModeContext, AuthContext } from "../App";
+import AppModal from "../components/AppModal";
 import { pb } from "../config/pocketbase";
 
 export default function ProfileScreen() {
   const [nickname, setNickname] = useState("");
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
   React.useEffect(() => {
     const user = pb.authStore.model;
     if (user) {
@@ -101,12 +105,18 @@ export default function ProfileScreen() {
               const userId = pb.authStore.model?.id;
               if (!userId) throw new Error("Usuário não encontrado");
               await pb.collection("users").update(userId, updateData);
-              alert("Dados atualizados com sucesso!");
+              setModalTitle("Sucesso");
+              setModalMessage("Dados atualizados com sucesso!");
+              setModalVisible(true);
               setSenhaAntiga("");
               setSenhaNova("");
               setSenhaNovaConfirm("");
             } catch (e) {
-              alert("Erro ao atualizar: " + (e?.message || "Tente novamente"));
+              setModalTitle("Erro");
+              setModalMessage(
+                "Erro ao atualizar: " + (e?.message || "Tente novamente")
+              );
+              setModalVisible(true);
             }
             setLoading(false);
           }}
@@ -125,6 +135,12 @@ export default function ProfileScreen() {
         >
           Sair
         </Button>
+        <AppModal
+          visible={modalVisible}
+          onDismiss={() => setModalVisible(false)}
+          title={modalTitle}
+          message={modalMessage}
+        />
       </View>
     </View>
   );
