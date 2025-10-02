@@ -81,7 +81,6 @@ export default function RegisterScreen({ navigation }) {
         Cadastrar
       </Button>
       <Button
-        mode="text"
         onPress={() => navigation.goBack()}
         mode="outlined"
         style={styles.button}

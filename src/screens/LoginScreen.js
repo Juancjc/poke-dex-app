@@ -46,7 +46,6 @@ export default function LoginScreen({ navigation }) {
         Entrar
       </Button>
       <Button
-        mode="text"
         onPress={() => navigation.navigate("Register")}
         mode="outlined"
         style={styles.button}
