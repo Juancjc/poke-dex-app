@@ -16,7 +16,6 @@ src/
 App.js             # Entry point (importa src/App.js)
 ```
 
-
 ## Variáveis de ambiente no Expo
 
 Para definir o endereço do backend (PocketBase), use o arquivo `app.config.js`:
@@ -77,6 +76,7 @@ O backend do projeto utiliza o [PocketBase](https://pocketbase.io/), um banco de
    ```sh
    npm install
    npm install react-native-paper react-native-vector-icons
+   npm install -g expo-cli
    ```
 2. Rode o app:
    ```sh
@@ -86,6 +86,7 @@ O backend do projeto utiliza o [PocketBase](https://pocketbase.io/), um banco de
 ## Paleta de Cores
 
 ### Light
+
 ```js
 {
    primary: "#1976D2",
@@ -110,6 +111,7 @@ O backend do projeto utiliza o [PocketBase](https://pocketbase.io/), um banco de
 ```
 
 ### Dark
+
 ```js
 {
    primary: "#90CAF9",
@@ -137,12 +139,15 @@ O backend do projeto utiliza o [PocketBase](https://pocketbase.io/), um banco de
 - O tema do Paper é customizado em `src/style/theme.js`.
 
 ## Navegação
+
 - As abas do Bottom Navigation são controladas pelo array `TABS` em `src/navigation/BottomTabs.js`.
 - Para adicionar/remover abas, basta editar esse array.
 
 ## Telas de Autenticação
+
 - Login e Cadastro prontos para integração com backend.
 
 ## Observações
+
 - Projeto pronto para expansão e fácil manutenção.
 - Siga o padrão das pastas para novos componentes/telas.

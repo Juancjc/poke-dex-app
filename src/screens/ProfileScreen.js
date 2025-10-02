@@ -15,14 +15,6 @@ export default function ProfileScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header>
-        <Appbar.Content title="Perfil" />
-        <Appbar.Action
-          icon="logout"
-          onPress={logout}
-          accessibilityLabel="Sair"
-        />
-      </Appbar.Header>
       <View
         style={[styles.container, { backgroundColor: theme.colors.background }]}
       >
@@ -58,6 +50,16 @@ export default function ProfileScreen() {
         </Button>
         <Button mode="outlined" onPress={toggleTheme} style={styles.button}>
           Alternar para modo {mode === "light" ? "escuro" : "claro"}
+        </Button>
+        <Button
+          Button
+          mode="outlined"
+          style={styles.button}
+          icon="logout"
+          onPress={logout}
+          accessibilityLabel="Sair"
+        >
+          Sair
         </Button>
       </View>
     </View>
