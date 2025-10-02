@@ -3,11 +3,20 @@ import { View, StyleSheet } from "react-native";
 import { Button, Text, useTheme, Appbar } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
 import { ThemeModeContext, AuthContext } from "../App";
+import { pb } from "../config/pocketbase";
 
 export default function ProfileScreen() {
   const [nickname, setNickname] = useState("");
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  React.useEffect(() => {
+    const user = pb.authStore.model;
+    if (user) {
+      setNickname(user.nickname || "");
+      setNome(user.nome || "");
+      setEmail(user.email || "");
+    }
+  }, []);
   const [senhaAntiga, setSenhaAntiga] = useState("");
   const [senhaNova, setSenhaNova] = useState("");
   const [senhaNovaConfirm, setSenhaNovaConfirm] = useState("");
@@ -108,15 +117,6 @@ export default function ProfileScreen() {
           Salvar
         </Button>
         <Button
-          mode="contained"
-          onPress={toggleTheme}
-          style={[styles.button, { backgroundColor: theme.colors.primary }]}
-          labelStyle={{ color: "#fff" }}
-        >
-          Alternar para modo {mode === "light" ? "escuro" : "claro"}
-        </Button>
-        <Button
-          Button
           mode="outlined"
           style={styles.button}
           icon="logout"
