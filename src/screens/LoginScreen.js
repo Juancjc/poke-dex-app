@@ -41,14 +41,15 @@ export default function LoginScreen({ navigation }) {
           }
         }}
         style={[styles.button, { backgroundColor: theme.colors.primary }]}
-        labelStyle={theme.colors.buttonTextColor}
+        labelStyle={{ color: "#fff" }}
       >
         Entrar
       </Button>
       <Button
         mode="text"
         onPress={() => navigation.navigate("Register")}
-        labelStyle={theme.colors.buttonTextColor}
+        mode="outlined"
+        style={styles.button}
       >
         Não tem conta? Cadastre-se
       </Button>

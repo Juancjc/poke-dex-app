@@ -76,13 +76,15 @@ export default function RegisterScreen({ navigation }) {
           }
         }}
         style={[styles.button, { backgroundColor: theme.colors.primary }]}
-        labelStyle={theme.colors.buttonTextColor}
+        labelStyle={{ color: "#fff" }}
       >
         Cadastrar
       </Button>
       <Button
         mode="text"
         onPress={() => navigation.goBack()}
+        mode="outlined"
+        style={styles.button}
         labelStyle={{ color: theme.colors.primary }}
       >
         Já tem conta? Entrar
