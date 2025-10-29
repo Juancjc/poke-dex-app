@@ -1,4 +1,103 @@
+
 # PokeDex App
+
+## Passo a Passo para Criar a Aplicação (Guia para Aula)
+
+### 1. Instalar o Node.js e o Expo CLI
+
+- Baixe e instale o [Node.js](https://nodejs.org/).
+- No terminal, instale o Expo CLI globalmente:
+  ```sh
+  npm install -g expo-cli
+  ```
+
+### 2. Criar o Projeto Expo
+
+- No terminal, execute:
+  ```sh
+  expo init poke-dex-app
+  ```
+- Escolha o template **blank (TypeScript ou JavaScript)**.
+- Entre na pasta do projeto:
+  ```sh
+  cd poke-dex-app
+  ```
+
+### 3. Estruturar as Pastas
+
+- Crie a estrutura de pastas conforme abaixo (pode ser manualmente ou usando comandos):
+  ```
+  src/
+    components/
+    navigation/
+    screens/
+    style/
+    hooks/
+    utils/
+    assets/
+  ```
+
+### 4. Instalar Dependências do Projeto
+
+- Execute:
+  ```sh
+  npm install
+  npm install react-native-paper react-native-vector-icons
+  ```
+
+### 5. Configurar o Backend (PocketBase)
+
+- Baixe o [PocketBase](https://pocketbase.io/) para seu sistema operacional.
+- Extraia o arquivo.
+- No terminal, rode o servidor:
+  - **Windows:**
+    ```sh
+    .\pocketbase.exe serve
+    ```
+  - **Linux/Mac:**
+    ```sh
+    ./pocketbase serve
+    ```
+  - **Rede local:**
+    ```sh
+    ./pocketbase serve --http=0.0.0.0:8090
+    ```
+- Acesse o painel web em `http://localhost:8090/_/`.
+
+### 6. Configurar o Endereço do Backend
+
+- No arquivo `src/config/local.config.js`, defina a URL do PocketBase:
+  ```js
+  export const POCKETBASE_URL = "http://localhost:8090";
+  ```
+
+### 7. Configurar o Expo para Usar a URL
+
+- No arquivo `app.config.js`, adicione:
+  ```js
+  import { POCKETBASE_URL } from "./src/config/local.config";
+
+  export default {
+    expo: {
+      name: "PokeDex App",
+      slug: "poke-dex-app",
+      version: "1.0.0",
+      extra: {
+        POCKETBASE_URL: POCKETBASE_URL,
+      },
+    },
+  };
+  ```
+
+### 8. Rodar o Projeto
+
+- No terminal, execute:
+  ```sh
+  npm start
+  ```
+- Use o app Expo Go no celular para escanear o QR code e testar.
+
+---
 
 Aplicativo React Native com navegação, autenticação e tema customizado usando React Native Paper.
 
