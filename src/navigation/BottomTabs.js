@@ -7,26 +7,26 @@ import HomeScreen from "../screens/HomeScreen";
 import SearchScreen from "../screens/SearchScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-
+import CapturarScreen from "../screens/CapturarScreen";
 // Array de abas para fácil manutenção
 export const TABS = [
   {
     name: "Home",
     component: HomeScreen,
     label: "Início",
-    icon: "home",
+    icon: "pokemon-go",
+  },
+  {
+    name: "Capturar",
+    component: CapturarScreen,
+    label: "Capturar",
+    icon: "pokeball",
   },
   {
     name: "Search",
     component: SearchScreen,
     label: "Buscar",
     icon: "magnify",
-  },
-  {
-    name: "Favorites",
-    component: FavoritesScreen,
-    label: "Favoritos",
-    icon: "heart",
   },
   {
     name: "Profile",
