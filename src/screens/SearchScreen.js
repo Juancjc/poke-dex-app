@@ -1,86 +1,58 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
-import { Text, useTheme } from "react-native-paper";
-import { getFromPokeApi, getPokemon } from "../config/pokeapi";
-import { TextInput, Button } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
+import { Text, useTheme, TextInput, Button } from "react-native-paper";
+import { getPokemon } from "../config/pokeapi";
+import MostrarPokemon from "../components/MostrarPokemon";
+
 export default function SearchScreen() {
   const theme = useTheme();
   const [nomePokemon, setNomePokemon] = React.useState("");
-  const dadosPokemon = React.useState(null);
-  // usar dadosPokemon para armazenar os dados retornados da API
-  const [dados, setDados] = dadosPokemon;
+  const [dados, setDados] = React.useState(null);
+  const [mostrar, setMostrar] = React.useState(false);
   const [endpoint, setEndpoint] = React.useState("");
-  function exibirDadosPokemon() {
-    if (!dados) return null;
-    return (
-      <View style={{ alignItems: "center", marginTop: 16 }}>
-        <Text>Nome: {dados.name}</Text>
-        <Text>Altura: {dados.height}</Text>
-        <Text>Peso: {dados.weight}</Text>
-        {dados.sprites && dados.sprites.front_default && (
-          <>
-            <Text>Imagem:</Text>
-            {/* Corrigido para React Native: usar Image */}
-            <View style={{ marginVertical: 8 }}>
-              <Image
-                source={{ uri: dados.sprites.front_default }}
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                }}
-                resizeMode="contain"
-              />
-            </View>
-            <Text style={{ marginTop: 8, fontSize: 12, color: "#888" }}>
-              URL: {dados.sprites.front_default}
-            </Text>
-          </>
-        )}
-        {/* Exibe o JSON completo retornado da API */}
-        <View style={{ marginTop: 16, width: "90%" }}>
-          <Text style={{ fontWeight: "bold", marginBottom: 4 }}>
-            JSON retornado:
-          </Text>
-          <Text style={{ fontSize: 12, color: "#333" }}>
-            {JSON.stringify(dados, null, 2)}
-          </Text>
-        </View>
-      </View>
-    );
+
+  async function buscarPokemon() {
+    const nomeFormatado = nomePokemon.toLowerCase();
+    const pokemon = await getPokemon(nomeFormatado);
+    setDados(pokemon);
+    setMostrar(true);
+  }
+
+  function handleVoltar() {
+    setMostrar(false);
+    setDados(null);
+    setNomePokemon("");
   }
 
   return (
     <View
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
-      <Text style={styles.title}>Procure pokemons</Text>
-      <TextInput
-        placeholder="Nome do Pokémon"
-        value={nomePokemon}
-        onChangeText={setNomePokemon}
-        style={styles.input}
-      />
-      <Button
-        mode="contained"
-        style={styles.button}
-        onPress={async () => {
-          const nome = nomePokemon.toLowerCase();
-          const pokemon = await getPokemon(nome);
-          setDados(pokemon);
-        }}
-      >
-        Buscar Pokémon
-      </Button>
-      {endpoint ? (
-        <Text style={{ fontSize: 14, color: "#007aff", marginTop: 8 }}>
-          Endpoint usado: {endpoint}
-        </Text>
-      ) : null}
-      <Text style={styles.title}>Dados do seu pokemon</Text>
-      {exibirDadosPokemon()}
+      {!mostrar ? (
+        <>
+          <Text style={styles.title}>Procure pokemons</Text>
+          <TextInput
+            placeholder="Nome do Pokémon"
+            value={nomePokemon}
+            onChangeText={setNomePokemon}
+            style={styles.input}
+          />
+          <Button
+            mode="contained"
+            style={styles.button}
+            onPress={buscarPokemon}
+          >
+            Buscar Pokémon
+          </Button>
+          {endpoint ? (
+            <Text style={{ fontSize: 14, color: "#007aff", marginTop: 8 }}>
+              Endpoint usado: {endpoint}
+            </Text>
+          ) : null}
+        </>
+      ) : (
+        <MostrarPokemon dados={dados} onVoltar={handleVoltar} />
+      )}
     </View>
   );
 }
@@ -103,7 +75,6 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
-
     alignSelf: "center",
   },
 });
