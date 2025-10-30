@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   jsonText: {
     fontSize: 12,
-    color: "#333",
+    color: "#f5f5f5ff",
   },
   button: {
     marginTop: 24,
