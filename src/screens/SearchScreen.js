@@ -1,9 +1,11 @@
 import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { Text, useTheme } from "react-native-paper";
-import { getFromPokeApi, getPokemon } from "../config/pokeapi";
+import { getPokemon } from "../config/pokeapi";
+import PokemonModal from "../components/PokemonModal";
 import { TextInput, Button } from "react-native-paper";
 export default function SearchScreen() {
+  const [modalVisible, setModalVisible] = React.useState(false);
   const theme = useTheme();
   const [nomePokemon, setNomePokemon] = React.useState("");
   const dadosPokemon = React.useState(null);
@@ -70,6 +72,7 @@ export default function SearchScreen() {
           const nome = nomePokemon.toLowerCase();
           const pokemon = await getPokemon(nome);
           setDados(pokemon);
+          setModalVisible(true);
         }}
       >
         Buscar Pokémon
@@ -79,8 +82,11 @@ export default function SearchScreen() {
           Endpoint usado: {endpoint}
         </Text>
       ) : null}
-      <Text style={styles.title}>Dados do seu pokemon</Text>
-      {exibirDadosPokemon()}
+      <PokemonModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        dados={dados}
+      />
     </View>
   );
 }
