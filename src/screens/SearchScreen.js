@@ -12,48 +12,6 @@ export default function SearchScreen() {
   // usar dadosPokemon para armazenar os dados retornados da API
   const [dados, setDados] = dadosPokemon;
   const [endpoint, setEndpoint] = React.useState("");
-  function exibirDadosPokemon() {
-    if (!dados) return null;
-    return (
-      <View style={{ alignItems: "center", marginTop: 16 }}>
-        <Text>Nome: {dados.name}</Text>
-        <Text>Altura: {dados.height}</Text>
-        <Text>Peso: {dados.weight}</Text>
-        {dados.sprites && dados.sprites.front_default && (
-          <>
-            <Text>Imagem:</Text>
-            {/* Corrigido para React Native: usar Image */}
-            <View style={{ marginVertical: 8 }}>
-              <Image
-                source={{ uri: dados.sprites.front_default }}
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                }}
-                resizeMode="contain"
-              />
-            </View>
-            <Text style={{ marginTop: 8, fontSize: 12, color: "#888" }}>
-              URL: {dados.sprites.front_default}
-            </Text>
-          </>
-        )}
-        {/* Exibe o JSON completo retornado da API */}
-        <View style={{ marginTop: 16, width: "90%" }}>
-          <Text style={{ fontWeight: "bold", marginBottom: 4 }}>
-            JSON retornado:
-          </Text>
-          <Text style={{ fontSize: 12, color: "#333" }}>
-            {JSON.stringify(dados, null, 2)}
-          </Text>
-        </View>
-      </View>
-    );
-  }
-
   return (
     <View
       style={[styles.container, { backgroundColor: theme.colors.background }]}
