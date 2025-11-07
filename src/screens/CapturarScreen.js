@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import * as FileSystem from "expo-file-system";
 import { Modal, Portal } from "react-native-paper";
 import ApiErrorModal from "../components/ApiErrorModal";
@@ -13,6 +15,24 @@ import {
 } from "../config/pokemonPocketBase";
 
 export default function CapturarScreen() {
+  // ...existing useState declarations...
+
+  // Limpa todos os campos ao focar na tela
+  useFocusEffect(
+    React.useCallback(() => {
+      setNomePokemon("");
+      setPokeApiData(null);
+      setFoto(null);
+      setNomeDado("");
+      setMensagem("");
+      setUltimoDataEnviado(null);
+      setErroApi("");
+      setErroModalVisible(false);
+      setModalConfirmVisible(false);
+      setDataParaConfirmar(null);
+    }, [])
+  );
+  const navigation = useNavigation();
   const [modalConfirmVisible, setModalConfirmVisible] = useState(false);
   const [dataParaConfirmar, setDataParaConfirmar] = useState(null);
   const [ultimoDataEnviado, setUltimoDataEnviado] = useState(null);
@@ -169,6 +189,17 @@ export default function CapturarScreen() {
                   await adicionarPokemonPocketBase(dataParaConfirmar);
                   setMensagem("Pokémon enviado com sucesso!");
                   setUltimoDataEnviado(dataParaConfirmar);
+                  setModalConfirmVisible(false);
+                  setEnviando(false);
+                  // Limpa campos para nova captura
+                  setNomePokemon("");
+                  setPokeApiData(null);
+                  setFoto(null);
+                  setNomeDado("");
+                  setTimeout(() => {
+                    navigation.navigate("Home");
+                  }, 2000);
+                  return;
                 } catch (e) {
                   setErroApi(e?.message || e);
                   setErroModalVisible(true);
@@ -188,25 +219,6 @@ export default function CapturarScreen() {
             </Button>
           </Modal>
         </Portal>
-        {ultimoDataEnviado && (
-          <View
-            style={{
-              marginTop: 16,
-              padding: 12,
-              backgroundColor: "#f5f5f5",
-              borderRadius: 8,
-            }}
-          >
-            <Text style={{ fontWeight: "bold", marginBottom: 8 }}>
-              Dados enviados:
-            </Text>
-            {Object.entries(ultimoDataEnviado).map(([key, value]) => (
-              <Text key={key} style={{ marginBottom: 2 }}>
-                {key}: {String(value)}
-              </Text>
-            ))}
-          </View>
-        )}
         {mensagem ? (
           <Text
             style={{
@@ -222,10 +234,13 @@ export default function CapturarScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({npx expo install eas-cli
+npx eas login
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    padding: 20,
+    marginTop: 200,
   },
   scrollContainer: {
     alignItems: "center",

@@ -1,3 +1,46 @@
+// Exclui um pokémon pelo id
+export async function excluirPokemonPocketBase(id) {
+  // Garante que o usuário está autenticado
+  if (!pb.authStore.model || !pb.authStore.model.id) {
+    const persisted = await getAuth();
+    if (persisted?.token && persisted?.model) {
+      pb.authStore.save(persisted.token, persisted.model);
+    }
+  }
+  if (!pb.authStore.model?.id) {
+    throw new Error("Usuário não autenticado. Faça login antes de excluir.");
+  }
+  try {
+    await pb.collection("pokemons").delete(id);
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
+// Busca todos os pokémons do usuário autenticado
+export async function listarPokemonsDoUsuario() {
+  // Recupera auth persistido, se necessário
+  if (!pb.authStore.model || !pb.authStore.model.id) {
+    const persisted = await getAuth();
+    if (persisted?.token && persisted?.model) {
+      pb.authStore.save(persisted.token, persisted.model);
+    }
+  }
+  if (!pb.authStore.model?.id) {
+    throw new Error("Usuário não autenticado. Faça login antes de buscar.");
+  }
+  const userId = pb.authStore.model.id;
+  try {
+    // Busca todos os pokémons do usuário autenticado
+    const result = await pb.collection("pokemons").getFullList({
+      filter: `user_id = "${userId}"`,
+      sort: "-created",
+    });
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
 import PocketBase from "pocketbase";
 import { getAuth } from "../utils/authPersist";
 
