@@ -1,3 +1,79 @@
+## Gerar APK para instalar no celular
+
+Por padrão, o comando `npx eas build --platform android` gera um arquivo `.aab` (Android App Bundle), que é usado para publicação na Play Store.
+
+Para gerar um arquivo `.apk` (instalável diretamente no dispositivo), use:
+
+```sh
+npx eas build --platform android --profile preview
+```
+
+O link para baixar o APK será exibido no final do build no terminal ou no painel do EAS.
+
+# Guia Rápido para Desenvolvedores
+
+## Estrutura e arquivos essenciais
+
+- `App.js` e `src/App.js`: ponto de entrada do app.
+- `index.js`: registra o app no Expo.
+- `src/config/local.config.js`: carrega variáveis do `.env` para uso no app.
+- `src/config/pocketbase.js`: integra o app ao backend PocketBase.
+- `src/config/pokeapi.js`: integra com a PokéAPI.
+- `src/config/pokemonPocketBase.js`: funções para CRUD de pokémons no backend.
+- `src/utils/authPersist.js`: persiste login usando `expo-secure-store`.
+- `src/navigation/`: navegação entre telas (autenticação, abas, etc).
+- `src/screens/`: telas principais (Login, Cadastro, Home, Favoritos, etc).
+- `.env`: variáveis de ambiente (endereços de APIs, etc).
+
+## Variáveis de ambiente
+
+O arquivo `.env` deve estar na raiz do projeto, sem aspas:
+
+```
+USE_POCKETBASE=true
+POCKETBASE_URL=https://pocket-base-railway-<ambiente>.up.railway.app
+EXTERNAL_API_URL=http://<ip>:3000
+POKEDEX_API_URL=https://pokeapi.co/api/v2
+```
+
+Essas variáveis são lidas automaticamente pelo app via `react-native-dotenv`.
+
+## Comandos principais
+
+Instalar dependências:
+```sh
+npm install
+```
+
+Rodar o app (Expo):
+```sh
+npx expo start -c
+```
+
+Login no EAS (Expo Application Services):
+```sh
+npx eas login
+```
+
+Build para Android/iOS:
+```sh
+npx eas build --platform android
+npx eas build --platform ios
+```
+
+## Fluxo de autenticação
+
+- O login/cadastro é feito nas telas de `src/screens/LoginScreen.js` e `src/screens/RegisterScreen.js`.
+- O backend PocketBase é acessado via `src/config/pocketbase.js` e `src/config/pokemonPocketBase.js`.
+- O token de autenticação é salvo localmente usando `expo-secure-store` (`src/utils/authPersist.js`).
+- O estado de autenticação é controlado pelo `AuthContext` em `src/App.js`.
+
+## Observações
+
+- Sempre reinicie o Metro Bundler com `npx expo start -c` após mudar o `.env`.
+- O app só lê variáveis do `.env` em tempo de build, não em tempo de execução.
+- Para rodar o backend local, use o PocketBase conforme instruções abaixo.
+
 
 # PokeDex App
 
