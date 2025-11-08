@@ -1,9 +1,20 @@
-export const USE_POCKETBASE = true;
-export const POCKETBASE_URL =
-  "https://pocket-base-railway-production.up.railway.app/";
-export const EXTERNAL_API_URL = "http://192.168.100.72:3000";
-export const POKEDEX_API_URL = "https://pokeapi.co/api/v2"; // URL da API pública do PokéAPI
+import {
+  USE_POCKETBASE as ENV_USE_POCKETBASE,
+  POCKETBASE_URL as ENV_POCKETBASE_URL,
+  EXTERNAL_API_URL as ENV_EXTERNAL_API_URL,
+  POKEDEX_API_URL as ENV_POKEDEX_API_URL,
+} from "@env";
 
+// Fallbacks e debug para facilitar diagnóstico
+console.log("[DEBUG .env] ENV_USE_POCKETBASE:", ENV_USE_POCKETBASE);
+console.log("[DEBUG .env] ENV_POCKETBASE_URL-aqui:", ENV_POCKETBASE_URL);
+console.log("[DEBUG .env] ENV_EXTERNAL_API_URL:", ENV_EXTERNAL_API_URL);
+console.log("[DEBUG .env] ENV_POKEDEX_API_URL:", ENV_POKEDEX_API_URL);
+
+export const USE_POCKETBASE = (ENV_USE_POCKETBASE ?? "true") === "true";
+export const POCKETBASE_URL = ENV_POCKETBASE_URL;
+export const EXTERNAL_API_URL = ENV_EXTERNAL_API_URL;
+export const POKEDEX_API_URL = ENV_POKEDEX_API_URL;
 // Endpoints da PokéAPI
 // O índice do array corresponde ao endpoint. Exemplo:
 // POKEDEX_ENDPOINTS[0] = "ability"
