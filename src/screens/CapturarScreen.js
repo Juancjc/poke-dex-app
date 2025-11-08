@@ -234,8 +234,7 @@ export default function CapturarScreen() {
   );
 }
 
-const styles = StyleSheet.create({npx expo install eas-cli
-npx eas login
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
