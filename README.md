@@ -1,3 +1,15 @@
+## Gerar APK para instalar no celular
+
+Por padrão, o comando `npx eas build --platform android` gera um arquivo `.aab` (Android App Bundle), que é usado para publicação na Play Store.
+
+Para gerar um arquivo `.apk` (instalável diretamente no dispositivo), use:
+
+```sh
+npx eas build --platform android --profile preview
+```
+
+O link para baixar o APK será exibido no final do build no terminal ou no painel do EAS.
+
 # Guia Rápido para Desenvolvedores
 
 ## Estrutura e arquivos essenciais
